@@ -14,7 +14,7 @@ public class FractionFinder {
 	 * @param list - the array
 	 * @return Maximum value.
 	 */
-	public Number findMaxFraction(Number[] list) {
+	public static Number findMaxFraction(Number[] list) {
 		Tuple<Number,Number> result = fractionHelper(list, 0, list.length-1);
 		return result.y.doubleValue()/result.x.doubleValue();
 	}
@@ -26,7 +26,7 @@ public class FractionFinder {
 	 * @param highIndex - highest index.
 	 * @return The maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n}.
 	 */
-	private Tuple<Number, Number> fractionHelper(Number[] list, int lowIndex, int highIndex) {
+	private static Tuple<Number, Number> fractionHelper(Number[] list, int lowIndex, int highIndex) {
 		if ((highIndex - lowIndex) == 1) {
 			return new Tuple<Number, Number>(list[lowIndex],list[highIndex]);
 		}
@@ -44,7 +44,7 @@ public class FractionFinder {
 	 * @param tuple2 - another pair.
 	 * @return The largest combined fraction.
 	 */
-	private Tuple<Number, Number> findLargestFraction(Tuple<Number,Number> tuple1, Tuple<Number,Number> tuple2) {
+	private static Tuple<Number, Number> findLargestFraction(Tuple<Number,Number> tuple1, Tuple<Number,Number> tuple2) {
 		double fraction1 = tuple1.y.doubleValue()/tuple1.x.doubleValue();
 		double fraction2 = tuple2.y.doubleValue()/tuple2.x.doubleValue();
 		
