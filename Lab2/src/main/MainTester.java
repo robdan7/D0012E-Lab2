@@ -7,8 +7,17 @@ public class MainTester {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Number[] array = new Float[4];
+		
+		for (int i = 0; i < array.length; i++) {
+			array[i] = (i+1)/2.0f;
+		}
+		
+		for (int i = 0; i < array.length ; i++) {
+			System.out.println(array[i]);
+		}
+		
+		System.out.println(FractionFinder.findMaxFraction(array));
 	}
 
 }
