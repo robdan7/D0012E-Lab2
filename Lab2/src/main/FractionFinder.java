@@ -3,14 +3,14 @@ package main;
 import misc.Tuple;
 
 /**
- * Class for finding the maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n} in an array.
+ * Class for finding the maximum value {a<sub>i</sub>/a<sub>j</sub> | 0 < i < j < n} in an array.
  * @author Robin, Oskar
  *
  */
 public class FractionFinder {
 	
 	/**
-	 * Find the maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n}.
+	 * Find the maximum value {a<sub>i</sub>/a<sub>j</sub> | 0 < i < j < n}.
 	 * @param list - an array with two or more numbers.
 	 * @return Maximum value.
 	 */
@@ -29,7 +29,7 @@ public class FractionFinder {
 	 * @param list - an array.
 	 * @param lowIndex -  lowest index.
 	 * @param highIndex - highest index.
-	 * @return The maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n}.
+	 * @return The maximum value {a<sub>i</sub>/a<sub>j</sub> | 0 < i < j < n}.
 	 */
 	private static Tuple<Number, Number> fractionHelper(Tuple<Number,Number>[] list, int lowIndex, int highIndex) {
 		if (highIndex == lowIndex) {	// Base case.
