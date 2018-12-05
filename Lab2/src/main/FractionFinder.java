@@ -48,7 +48,7 @@ public class FractionFinder {
 	 * Find the largest combined fraction.<br>
 	 * <strong>Case 1:</strong> The largest fraction is a local y/x.<br>
 	 * <strong>Case 2:</strong> The largest fraction is a combination; the largest fraction is 
-	 * (largest y)/(largest x).
+	 * (largest y)/(smallest x).
 	 * @param tuple1 - a pair.
 	 * @param tuple2 - another pair.
 	 * @return The largest combined fraction.
