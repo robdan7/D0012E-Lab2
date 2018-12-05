@@ -17,9 +17,6 @@ public class FractionFinder {
 	public static Number findMaxFraction(Number[] list) {
 		
 		Tuple<Number,Number>[] tuples = convertToTuples(list);
-		for (int i = 0; i < tuples.length; i++) {
-			System.out.println(tuples[i]);
-		}
 		if (list.length < 2) {
 			throw new IllegalArgumentException("array size must be larger or equal to 2.");
 		}
