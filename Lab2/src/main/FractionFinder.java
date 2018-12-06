@@ -3,14 +3,14 @@ package main;
 import misc.Tuple;
 
 /**
- * Class for finding the maximum value {a<sub>i</sub>/a<sub>j</sub> | 0 < i < j < n} in an array.
+ * Class for finding the maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n} in an array.
  * @author Robin, Oskar
  *
  */
 public class FractionFinder {
 	
 	/**
-	 * Find the maximum value {a<sub>i</sub>/a<sub>j</sub> | 0 < i < j < n}.
+	 * Find the maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n}.
 	 * @param list - an array with two or more numbers.
 	 * @return Maximum value.
 	 */
@@ -31,7 +31,7 @@ public class FractionFinder {
 	 * @param list - an array.
 	 * @param lowIndex -  lowest index.
 	 * @param highIndex - highest index.
-	 * @return The maximum value {a<sub>i</sub>/a<sub>j</sub> | 0 < i < j < n}.
+	 * @return The maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n}.
 	 */
 	private static Tuple<Number, Tuple<Number,Number>> fractionHelper(Tuple<Number,Number>[] list, int lowIndex, int highIndex) {
 		if (highIndex == lowIndex) {	// Base case.
@@ -51,26 +51,9 @@ public class FractionFinder {
 		Tuple<Number, Tuple<Number,Number>> tuple1 = fractionHelper(list, lowIndex,(highIndex-lowIndex)/2+lowIndex);
 		Tuple<Number, Tuple<Number,Number>> tuple2 = fractionHelper(list, (highIndex-lowIndex)/2+lowIndex+1, highIndex);
 		
-<<<<<<< HEAD
 		Number value = tuple1.x.doubleValue() > tuple2.x.doubleValue() ? tuple1.x.doubleValue() : tuple2.x.doubleValue();
 		Number frac = tuple2.y.y.doubleValue() / tuple1.y.x.doubleValue();
 		value = value.doubleValue() < frac.doubleValue() ? frac : value;
-=======
-		// Find the largest value and return it.
-		return findLargestFraction(tuple1, tuple2);
-	}
-	
-	/**
-	 * Find the largest combined fraction.<br>
-	 * <strong>Case 1:</strong> The largest fraction is a local y/x.<br>
-	 * <strong>Case 2:</strong> The largest fraction is a combination; the largest fraction is 
-	 * (largest y)/(smallest x).
-	 * @param tuple1 - a pair.
-	 * @param tuple2 - another pair.
-	 * @return The largest combined fraction.
-	 */
-	private static Tuple<Number, Number> findLargestFraction(Tuple<Number,Number> tuple1, Tuple<Number,Number> tuple2) {
->>>>>>> branch 'master' of https://github.com/robdan7/D0012E-Lab2.git
 		
 		Number lowest = tuple1.y.x.doubleValue() < tuple2.y.x.doubleValue() ? tuple1.y.x : tuple2.y.x;
 		Number highest = tuple1.y.y.doubleValue() > tuple2.y.y.doubleValue() ? tuple1.y.y :tuple2.y.y;
