@@ -20,8 +20,10 @@ public class FractionFinder {
 		if (list.length < 2) {
 			throw new IllegalArgumentException("array size must be larger or equal to 2.");
 		}
-		Tuple<Number,Number> result = fractionHelper(tuples, 0, tuples.length-1);
-		return result.y.doubleValue()/result.x.doubleValue();
+		Tuple<Number,Tuple<Number,Number>> result = fractionHelper(tuples, 0, tuples.length-1);
+		//return result.y.doubleValue()/result.x.doubleValue();
+		//return result.x.doubleValue() > result.y.y.doubleValue()/result.y.x.doubleValue() ? result.y.y.doubleValue()/result.y.x.doubleValue() : result.x;
+		return result.x;
 	}
 	
 	/**
@@ -31,53 +33,34 @@ public class FractionFinder {
 	 * @param highIndex - highest index.
 	 * @return The maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n}.
 	 */
-	private static Tuple<Number, Number> fractionHelper(Tuple<Number,Number>[] list, int lowIndex, int highIndex) {
+	private static Tuple<Number, Tuple<Number,Number>> fractionHelper(Tuple<Number,Number>[] list, int lowIndex, int highIndex) {
 		if (highIndex == lowIndex) {	// Base case.
-			return list[lowIndex];		// One pair equals two elements.
+			//System.out.println(list[lowIndex]);
+			//return list[lowIndex];		// One pair equals two elements.
+			Tuple<Number,Number> lowHigh;
+			if (list[lowIndex].x.doubleValue() < list[lowIndex].y.doubleValue()) {
+				lowHigh = new Tuple<Number,Number>(list[lowIndex].x, list[lowIndex].y);
+			} else {
+				lowHigh = new Tuple<Number,Number>(list[lowIndex].y, list[lowIndex].x);
+			}
+			
+			return new Tuple<Number,Tuple<Number,Number>>(list[lowIndex].y.doubleValue()/list[lowIndex].x.doubleValue(),lowHigh);
 		}
 		
 		// Recursion.
-		Tuple<Number, Number> tuple1 = fractionHelper(list, lowIndex,(highIndex-lowIndex)/2+lowIndex);
-		Tuple<Number, Number> tuple2 = fractionHelper(list, (highIndex-lowIndex)/2+lowIndex+1, highIndex);
+		Tuple<Number, Tuple<Number,Number>> tuple1 = fractionHelper(list, lowIndex,(highIndex-lowIndex)/2+lowIndex);
+		Tuple<Number, Tuple<Number,Number>> tuple2 = fractionHelper(list, (highIndex-lowIndex)/2+lowIndex+1, highIndex);
 		
-		// Find the largest value and return it.
-		return findLargestFraction(tuple1, tuple2);
-	}
-	
-	/**
-	 * Find the largest combined fraction.<br>
-	 * <strong>Case 1:</strong> The largest fraction is a local y/x.<br>
-	 * <strong>Case 2:</strong> The largest fraction is a combination; the largest fraction is 
-	 * (largest y)/(largest x).
-	 * @param tuple1 - a pair.
-	 * @param tuple2 - another pair.
-	 * @return The largest combined fraction.
-	 */
-	private static Tuple<Number, Number> findLargestFraction(Tuple<Number,Number> tuple1, Tuple<Number,Number> tuple2) {
+		Number value = tuple1.x.doubleValue() > tuple2.x.doubleValue() ? tuple1.x.doubleValue() : tuple2.x.doubleValue();
+		Number frac = tuple2.y.y.doubleValue() / tuple1.y.x.doubleValue();
+		value = value.doubleValue() < frac.doubleValue() ? frac : value;
 		
-		// Get the fractions now for quicker calculations.
-		double fraction1 = tuple1.y.doubleValue()/tuple1.x.doubleValue();
-		double fraction2 = tuple2.y.doubleValue()/tuple2.x.doubleValue();
+		Number lowest = tuple1.y.x.doubleValue() < tuple2.y.x.doubleValue() ? tuple1.y.x : tuple2.y.x;
+		Number highest = tuple1.y.y.doubleValue() > tuple2.y.y.doubleValue() ? tuple1.y.y :tuple2.y.y;
 		
-		Tuple<Number,Number> result = tuple1;
-		double highestFraction = fraction1;		// Not the result. Only temporary placeholder.
-		
-		// Find the largest local fraction.
-		if (fraction1 < fraction2) {
-			highestFraction = fraction2;
-			result = tuple2;
-		}
-		
-		// Find the lowest value in the first pair and the highest in the other.
-		Number tuple1LowestValue = tuple1.x.doubleValue() < tuple1.y.doubleValue() ? tuple1.x.doubleValue() : tuple1.y.doubleValue();
-		Number tuple2HighestValue = tuple2.x.doubleValue() > tuple2.y.doubleValue() ? tuple2.x.doubleValue() : tuple2.y.doubleValue();
+		Tuple<Number,Number> result = new Tuple<Number,Number>(lowest, highest);
 
-		
-		// If the largest fraction is a combination: Change the result.
-		if ((tuple2HighestValue.doubleValue()/tuple1LowestValue.doubleValue()) > highestFraction) {
-			result = new Tuple<Number,Number>(tuple1LowestValue, tuple2HighestValue);
-		}
-		return result;
+		return new Tuple<Number,Tuple<Number,Number>>(value,result);
 	}
 	
 	/**

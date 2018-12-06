@@ -31,17 +31,20 @@ public class MainTester {
 	
 
 	public static void main(String[] args) {
-	
-		/*Number[] array = new Integer[6];
+		/*
+		Integer[] array = new Integer[8];
 		Random r = new Random();
 		for (int i = 0; i < array.length; i++) {
 			array[i] = r.nextInt(array.length+1)+1;
 		}
 		array[0] = 5;
 		array[1] = 4;
-		array[2] = 4;
+		array[2] = 3;
 		array[3] = 2;
 		array[4] = 5;
+		array[5] = 3;
+		array[6] = 2;
+		array[7] = 1;
 		
 		for (int i = 0; i < array.length ; i++) {
 			System.out.println(array[i]);
@@ -64,6 +67,7 @@ public class MainTester {
 		consoleScanner.close();
 		
 		new MainTester(interval, iterations).analyzeListAndExport(expoFile);
+		
 	}
 	
 	
