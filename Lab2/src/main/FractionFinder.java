@@ -16,14 +16,24 @@ public class FractionFinder {
 	 */
 	public static Number findMaxFraction(Number[] list) {
 		
-		Tuple<Number,Number>[] tuples = convertToTuples(list);
+		//Tuple<Number,Number>[] tuples = convertToTuples(list);
 		if (list.length < 2) {
 			throw new IllegalArgumentException("array size must be larger or equal to 2.");
 		}
-		Tuple<Number,Tuple<Number,Number>> result = fractionHelper(tuples, 0, tuples.length-1);
+		
+		int maxIndex = list.length-1;
+		if ((list.length>>1)<<1 != list.length) {
+			maxIndex--;
+		}
+		
+		Tuple<Number,Tuple<Number,Number>> result = fractionHelper(list, 0, maxIndex);
+		Number frac = result.x;
+		if (list[list.length-1].doubleValue()/result.y.x.doubleValue() > frac.doubleValue()) {
+			frac = list[list.length-1].doubleValue()/result.y.x.doubleValue();
+		}
 		//return result.y.doubleValue()/result.x.doubleValue();
 		//return result.x.doubleValue() > result.y.y.doubleValue()/result.y.x.doubleValue() ? result.y.y.doubleValue()/result.y.x.doubleValue() : result.x;
-		return result.x;
+		return frac;
 	}
 	
 	/**
@@ -33,23 +43,23 @@ public class FractionFinder {
 	 * @param highIndex - highest index.
 	 * @return The maximum value {a<sub>i</sub>/a<sub>j</sub> | 1 < i < j < n}.
 	 */
-	private static Tuple<Number, Tuple<Number,Number>> fractionHelper(Tuple<Number,Number>[] list, int lowIndex, int highIndex) {
-		if (highIndex == lowIndex) {	// Base case.
+	private static Tuple<Number, Tuple<Number,Number>> fractionHelper(Number[] list, int lowIndex, int highIndex) {
+		if (highIndex == (lowIndex+1)) {	// Base case.
 			//System.out.println(list[lowIndex]);
 			//return list[lowIndex];		// One pair equals two elements.
 			Tuple<Number,Number> lowHigh;
-			if (list[lowIndex].x.doubleValue() < list[lowIndex].y.doubleValue()) {
-				lowHigh = new Tuple<Number,Number>(list[lowIndex].x, list[lowIndex].y);
+			if (list[lowIndex].doubleValue() < list[highIndex].doubleValue()) {
+				lowHigh = new Tuple<Number,Number>(list[lowIndex], list[highIndex]);
 			} else {
-				lowHigh = new Tuple<Number,Number>(list[lowIndex].y, list[lowIndex].x);
+				lowHigh = new Tuple<Number,Number>(list[highIndex], list[lowIndex]);
 			}
 			
-			return new Tuple<Number,Tuple<Number,Number>>(list[lowIndex].y.doubleValue()/list[lowIndex].x.doubleValue(),lowHigh);
+			return new Tuple<Number,Tuple<Number,Number>>(list[highIndex].doubleValue()/list[lowIndex].doubleValue(),lowHigh);
 		}
 		
 		// Recursion.
-		Tuple<Number, Tuple<Number,Number>> tuple1 = fractionHelper(list, lowIndex,(highIndex-lowIndex)/2+lowIndex);
-		Tuple<Number, Tuple<Number,Number>> tuple2 = fractionHelper(list, (highIndex-lowIndex)/2+lowIndex+1, highIndex);
+		Tuple<Number, Tuple<Number,Number>> tuple1 = fractionHelper(list, lowIndex,(((highIndex-lowIndex+1)>>2)<<1)-1+lowIndex);
+		Tuple<Number, Tuple<Number,Number>> tuple2 = fractionHelper(list, (((highIndex-lowIndex+1)>>2)<<1)+lowIndex, highIndex);
 		
 		Number value = tuple1.x.doubleValue() > tuple2.x.doubleValue() ? tuple1.x.doubleValue() : tuple2.x.doubleValue();
 		Number frac = tuple2.y.y.doubleValue() / tuple1.y.x.doubleValue();
@@ -68,6 +78,7 @@ public class FractionFinder {
 	 * @param array
 	 * @return an array of pairs representing the input.
 	 */
+	@Deprecated
 	private static Tuple<Number, Number>[] convertToTuples(Number[] array) {
 		int isOdd = array.length/2 == array.length/2.0f ? 0 : 1;	// we need this if the list length is odd.
 		

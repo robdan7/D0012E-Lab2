@@ -32,7 +32,7 @@ public class MainTester {
 
 	public static void main(String[] args) {
 		/*
-		Integer[] array = new Integer[8];
+		Integer[] array = new Integer[9];
 		Random r = new Random();
 		for (int i = 0; i < array.length; i++) {
 			array[i] = r.nextInt(array.length+1)+1;
